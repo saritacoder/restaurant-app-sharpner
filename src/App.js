@@ -1,13 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-import {Fragment} from 'react';
-import Header from './components/Layout/Header';
+import { useState } from "react";
+import Header from "./Components/Layout/Header";
+import Meals from "./Components/Meals/Meals";
+import Cart from "./Components/Cart/Cart";
+import CartProvider from "./Store/CartProvide";
 
 function App() {
+  const [cartShown, setCartShown] = useState(false);
+
+  const showCartHandler = () => {
+    setCartShown(true);
+  };
+
+  const hideCartHandler = () => {
+    setCartShown(false);
+  };
+
   return (
-    <Fragment>
-     <Header />
-    </Fragment>
+    <CartProvider>
+      {cartShown && <Cart onClose={hideCartHandler} />}
+      <Header onShowCart={showCartHandler} />
+      <main>
+        <Meals />
+      </main>
+    </CartProvider>
   );
 }
 
